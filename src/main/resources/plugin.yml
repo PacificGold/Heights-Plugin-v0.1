@@ -1,0 +1,11 @@
+name: HeightsJCarney
+version: '${project.version}'
+main: com.gmail.thepacificgold.heights.Heights
+api-version: 1.19
+authors: [ jrcarney ]
+
+commands:
+  getheight:
+    description: marks and places building height based on player's input and starting position
+    usage: /<command>
+    aliases: [gh]
