@@ -38,26 +38,39 @@ public class HeightCommand implements CommandExecutor {
 
                 if (calc >= 0.25 && calc <= 0.75) { //half block logic
                     if(isNeg == 1) {
-                        double out = height - calc + 2;
+                        double out = Math.ceil(height) + 1;
                         ret = p.getLocation().subtract(0, out, 0);
-                        p.sendMessage(ChatColor.RED + "Height Placed at -" + height + " Feet.");
-                    }else {
-                        double out = height - calc;
+                        p.sendMessage(ChatColor.RED + "Height Placed at -" + ChatColor.GOLD + height + ChatColor.RED + " Feet.");
+                    } else {
+                        double out = Math.ceil(height) - 1;
                         ret = p.getLocation().add(0, out, 0);
-                        p.sendMessage(ChatColor.RED + "Height Placed at " + height + " Feet.");
+                        p.sendMessage(ChatColor.RED + "Height Placed at " + ChatColor.GOLD + height + ChatColor.RED + " Feet.");
                     }
                     Block placed = currentWorld.getBlockAt(ret);
                     placed.setType(Material.PURPUR_SLAB);
                     p.teleport(ret);
-                } else { //full block logic
-                    if(isNeg == 1) {
-                        double out = height - calc + 2;
+                } else if(calc >= 0.75 && calc <= 1.00){ // FULL BLOCK > 0.75
+                    if(isNeg == 1){
+                        double out = Math.ceil(height) + 1;
                         ret = p.getLocation().subtract(0, out, 0);
-                        p.sendMessage(ChatColor.RED + "Height Placed at -" + height + " Feet.");
+                        p.sendMessage(ChatColor.RED + "Height Placed at -" + ChatColor.GOLD + height + ChatColor.RED + " Feet.");
                     } else {
-                        double out = height - calc - 1;
+                        double out = Math.ceil(height) - 1;
                         ret = p.getLocation().add(0, out, 0);
-                        p.sendMessage(ChatColor.RED + "Height Placed at " + height + " Feet.");
+                        p.sendMessage(ChatColor.RED + "Height Placed at " + ChatColor.GOLD + height + ChatColor.RED + " Feet.");
+                    }
+                    Block placed = currentWorld.getBlockAt(ret);
+                    placed.setType(Material.PURPUR_BLOCK);
+                    p.teleport(ret); // END NEW LOGIC
+                } else { // FULL BLOCK < 0.25
+                    if(isNeg == 1) {
+                        double out = Math.floor(height) + 1;
+                        ret = p.getLocation().subtract(0, out, 0);
+                        p.sendMessage(ChatColor.RED + "Height Placed at -" + ChatColor.GOLD + height + ChatColor.RED  + " Feet.");
+                    } else {
+                        double out = Math.floor(height) - 1;
+                        ret = p.getLocation().add(0, out, 0);
+                        p.sendMessage(ChatColor.RED + "Height Placed at " + ChatColor.GOLD + height + ChatColor.RED + " Feet.");
                     }
                     Block placed = currentWorld.getBlockAt(ret);
                     placed.setType(Material.PURPUR_BLOCK);
@@ -65,7 +78,7 @@ public class HeightCommand implements CommandExecutor {
                 }
                 return true;
             } else {
-                p.sendMessage(ChatColor.RED + "Invalid Arguments: use /getheight initial target");
+                p.sendMessage(ChatColor.RED + "Invalid Arguments: use" + ChatColor.GOLD + "/getheight " + ChatColor.RED + " initial target.");
                 return false;
             }
         }
